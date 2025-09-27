@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Architecture Portfolio - Gallery</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html">
+                    <h2>ARCHITECTURE</h2>
+                    <h1>PORTFOLIO</h1>
+                </a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="projects.html" class="nav-link">Projects</a></li>
+                <li><a href="gallery.html" class="nav-link active">Gallery</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+                <li><a href="login.html" class="nav-link">Login</a></li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Gallery Section -->
+    <main class="main-content">
+        <div class="container">
+            <h1 class="page-title">Gallery</h1>
+            <div class="gallery-filters">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="residential">Residential</button>
+                <button class="filter-btn" data-filter="commercial">Commercial</button>
+            </div>
+            <div class="gallery-grid">
+                <div class="gallery-item" data-category="residential">
+                    <div class="gallery-image">
+                        <div class="gallery-placeholder gallery-1"></div>
+                    </div>
+                    <div class="gallery-overlay">
+                        <h4>Modern Living Room</h4>
+                        <p>Contemporary interior design</p>
+                    </div>
+                </div>
+                <div class="gallery-item" data-category="commercial">
+                    <div class="gallery-image">
+                        <div class="gallery-placeholder gallery-2"></div>
+                    </div>
+                    <div class="gallery-overlay">
+                        <h4>Office Lobby</h4>
+                        <p>Corporate headquarters entrance</p>
+                    </div>
+                </div>
+                <div class="gallery-item" data-category="residential">
+                    <div class="gallery-image">
+                        <div class="gallery-placeholder gallery-3"></div>
+                    </div>
+                    <div class="gallery-overlay">
+                        <h4>Kitchen Design</h4>
+                        <p>Modern culinary space</p>
+                    </div>
+                </div>
+                <div class="gallery-item" data-category="commercial">
+                    <div class="gallery-image">
+                        <div class="gallery-placeholder gallery-4"></div>
+                    </div>
+                    <div class="gallery-overlay">
+                        <h4>Building Facade</h4>
+                        <p>Innovative exterior design</p>
+                    </div>
+                </div>
+                <div class="gallery-item" data-category="residential">
+                    <div class="gallery-image">
+                        <div class="gallery-placeholder gallery-5"></div>
+                    </div>
+                    <div class="gallery-overlay">
+                        <h4>Bedroom Suite</h4>
+                        <p>Luxury residential interior</p>
+                    </div>
+                </div>
+                <div class="gallery-item" data-category="commercial">
+                    <div class="gallery-image">
+                        <div class="gallery-placeholder gallery-6"></div>
+                    </div>
+                    <div class="gallery-overlay">
+                        <h4>City Skyline</h4>
+                        <p>Urban development project</p>
+                    </div>
+                </div>
+                <div class="gallery-item" data-category="residential">
+                    <div class="gallery-image">
+                        <div class="gallery-placeholder gallery-7"></div>
+                    </div>
+                    <div class="gallery-overlay">
+                        <h4>Modern Bathroom</h4>
+                        <p>Spa-like residential bathroom</p>
+                    </div>
+                </div>
+                <div class="gallery-item" data-category="commercial">
+                    <div class="gallery-image">
+                        <div class="gallery-placeholder gallery-8"></div>
+                    </div>
+                    <div class="gallery-overlay">
+                        <h4>Conference Room</h4>
+                        <p>Executive meeting space</p>
+                    </div>
+                </div>
+                <div class="gallery-item" data-category="residential">
+                    <div class="gallery-image">
+                        <div class="gallery-placeholder gallery-9"></div>
+                    </div>
+                    <div class="gallery-overlay">
+                        <h4>Garden View</h4>
+                        <p>Indoor-outdoor living space</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox" class="lightbox">
+        <div class="lightbox-content">
+            <span class="close-lightbox">&times;</span>
+            <img id="lightbox-image" src="" alt="">
+            <div class="lightbox-info">
+                <h3 id="lightbox-title"></h3>
+                <p id="lightbox-description"></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
