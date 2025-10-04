@@ -223,6 +223,23 @@ if (loginForm)
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!email || !pass) return alert('Please fill in all fields.');
     if (!emailRegex.test(email)) return alert('Invalid email.');
+    
+    // Check if already logged in
+    const isLoggedIn = localStorage.getItem('isLoggedIn');
+    if (isLoggedIn === 'true') {
+      return alert('You are already logged in! Please refresh the page to log in again.');
+    }
+    
+    // Extract username from email (part before @)
+    const username = email.split('@')[0];
+    
+    // Store username and login status in localStorage
+    localStorage.setItem('username', username);
+    localStorage.setItem('isLoggedIn', 'true');
+    
+    // Show username in navigation
+    showUsername(username);
+    
     alert('Login successful!');
     loginForm.reset();
   });
@@ -240,6 +257,23 @@ if (signupForm)
     if (!emailRegex.test(email)) return alert('Invalid email.');
     if (pass.length < 6) return alert('Password too short.');
     if (pass !== cpass) return alert('Passwords do not match.');
+    
+    // Check if already logged in
+    const isLoggedIn = localStorage.getItem('isLoggedIn');
+    if (isLoggedIn === 'true') {
+      return alert('You are already logged in! Please refresh the page to sign up again.');
+    }
+    
+    // Use the full name as username
+    const username = name.trim();
+    
+    // Store username and login status in localStorage
+    localStorage.setItem('username', username);
+    localStorage.setItem('isLoggedIn', 'true');
+    
+    // Show username in navigation
+    showUsername(username);
+    
     alert('Account created successfully!');
     signupForm.reset();
   });
@@ -316,6 +350,31 @@ document.querySelectorAll('input, textarea').forEach(i => {
   i.addEventListener('input', clearErrors);
 });
 
+// ===== USERNAME DISPLAY =====
+function showUsername(username) {
+  const usernameDisplay = document.getElementById('username-display');
+  const usernameText = document.getElementById('username-text');
+  
+  if (usernameDisplay && usernameText) {
+    usernameText.textContent = `Hi, ${username}`;
+    usernameDisplay.style.display = 'block';
+  }
+}
+
+function hideUsername() {
+  const usernameDisplay = document.getElementById('username-display');
+  if (usernameDisplay) {
+    usernameDisplay.style.display = 'none';
+  }
+}
+
+function loadStoredUsername() {
+  // Clear login status on page refresh
+  localStorage.removeItem('isLoggedIn');
+  localStorage.removeItem('username');
+  hideUsername();
+}
+
 // ===== INITIALIZE PAGE =====
 document.addEventListener('DOMContentLoaded', () => {
   const home = document.getElementById('home');
@@ -325,4 +384,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.style.transition = 'opacity 0.5s ease';
     document.body.style.opacity = '1';
   }, 100);
+  
+  // Load stored username on page load
+  loadStoredUsername();
 });
