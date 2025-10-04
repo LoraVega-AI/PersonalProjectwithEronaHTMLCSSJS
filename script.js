@@ -269,7 +269,10 @@ if (nextBtn) {
 
 // Contact Form Handling
 if (contactForm) {
+    console.log('Contact form found, adding event listener');
+    
     contactForm.addEventListener('submit', (e) => {
+        console.log('Form submit event triggered');
         e.preventDefault();
         
         // Get form data
@@ -279,23 +282,183 @@ if (contactForm) {
         const subject = formData.get('subject');
         const message = formData.get('message');
         
+        console.log('Form data:', { name, email, subject, message });
+        
         // Basic validation
         if (!name || !email || !subject || !message) {
-            alert('Please fill in all fields.');
+            console.log('Validation failed: missing fields');
+            showCustomAlert('Please fill in all fields.', 'error');
             return;
         }
         
         // Email validation
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
-            alert('Please enter a valid email address.');
+            console.log('Validation failed: invalid email');
+            showCustomAlert('Please enter a valid email address.', 'error');
             return;
         }
         
-        // Simulate form submission
-        alert('Thank you for your message! We will get back to you soon.');
-        contactForm.reset();
+        console.log('Validation passed, showing loading state');
+        
+        // Show loading state
+        const submitBtn = contactForm.querySelector('.submit-btn');
+        const originalText = submitBtn.querySelector('.btn-text').textContent;
+        const btnIcon = submitBtn.querySelector('.btn-icon');
+        
+        submitBtn.disabled = true;
+        submitBtn.querySelector('.btn-text').textContent = 'Sending...';
+        btnIcon.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg>';
+        
+        // Simulate form submission with delay
+        setTimeout(() => {
+            console.log('Form submission completed, showing success alert');
+            // Reset button
+            submitBtn.disabled = false;
+            submitBtn.querySelector('.btn-text').textContent = originalText;
+            btnIcon.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22,2 15,22 11,13 2,9 22,2"></polygon></svg>';
+            
+            // Show success alert
+            showCustomAlert('Thank you for your message! We will get back to you soon.', 'success');
+            // Fallback to browser alert
+            setTimeout(() => {
+                if (!document.getElementById('customAlert').classList.contains('show')) {
+                    alert('Message successfully sent! Thank you for your message!');
+                }
+            }, 100);
+            contactForm.reset();
+        }, 2000);
     });
+} else {
+    console.log('Contact form not found!');
+}
+
+// Backup: Direct button click handler for contact form
+document.addEventListener('DOMContentLoaded', () => {
+    const submitBtn = document.querySelector('.submit-btn');
+    if (submitBtn) {
+        console.log('Submit button found, adding direct click handler');
+        submitBtn.addEventListener('click', (e) => {
+            console.log('Submit button clicked directly');
+            e.preventDefault();
+            
+            // Get the form
+            const form = submitBtn.closest('form');
+            if (!form) {
+                console.log('No form found for button');
+                return;
+            }
+            
+            // Get form data
+            const formData = new FormData(form);
+            const name = formData.get('name');
+            const email = formData.get('email');
+            const subject = formData.get('subject');
+            const message = formData.get('message');
+            
+            console.log('Form data from direct click:', { name, email, subject, message });
+            
+            // Basic validation
+            if (!name || !email || !subject || !message) {
+                console.log('Validation failed: missing fields');
+                showCustomAlert('Please fill in all fields.', 'error');
+                return;
+            }
+            
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                console.log('Validation failed: invalid email');
+                showCustomAlert('Please enter a valid email address.', 'error');
+                return;
+            }
+            
+            console.log('Validation passed, showing loading state');
+            
+            // Show loading state
+            const originalText = submitBtn.querySelector('.btn-text').textContent;
+            const btnIcon = submitBtn.querySelector('.btn-icon');
+            
+            submitBtn.disabled = true;
+            submitBtn.querySelector('.btn-text').textContent = 'Sending...';
+            btnIcon.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg>';
+            
+            // Simulate form submission with delay
+            setTimeout(() => {
+                console.log('Form submission completed, showing success alert');
+                // Reset button
+                submitBtn.disabled = false;
+                submitBtn.querySelector('.btn-text').textContent = originalText;
+                btnIcon.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22,2 15,22 11,13 2,9 22,2"></polygon></svg>';
+                
+                // Show success alert
+                showCustomAlert('Thank you for your message! We will get back to you soon.', 'success');
+                // Fallback to browser alert
+                setTimeout(() => {
+                    if (!document.getElementById('customAlert').classList.contains('show')) {
+                        alert('Message successfully sent! Thank you for your message!');
+                    }
+                }, 100);
+                form.reset();
+            }, 2000);
+        });
+    } else {
+        console.log('Submit button not found!');
+    }
+});
+
+// Custom Alert Functions
+function showCustomAlert(message, type = 'success') {
+    console.log('showCustomAlert called with:', message, type);
+    const alert = document.getElementById('customAlert');
+    
+    if (!alert) {
+        console.error('Custom alert element not found!');
+        // Fallback to browser alert
+        alert(message);
+        return;
+    }
+    
+    console.log('Custom alert element found');
+    const alertTitle = alert.querySelector('.alert-title');
+    const alertMessage = alert.querySelector('.alert-message');
+    const alertIcon = alert.querySelector('.alert-icon');
+    const alertBtn = alert.querySelector('.alert-btn');
+    
+    if (!alertTitle || !alertMessage || !alertIcon || !alertBtn) {
+        console.error('Alert elements not found!');
+        // Fallback to browser alert
+        alert(message);
+        return;
+    }
+    
+    // Update content
+    alertMessage.textContent = message;
+    
+    if (type === 'success') {
+        alertTitle.textContent = 'Message Sent Successfully!';
+        alertIcon.innerHTML = '<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22,4 12,14.01 9,11.01"></polyline></svg>';
+        alertIcon.style.background = 'linear-gradient(135deg, #4CAF50, #45a049)';
+        alertBtn.style.background = 'linear-gradient(135deg, #4CAF50, #45a049)';
+        alert.querySelector('.alert-content').style.borderTop = '4px solid #4CAF50';
+    } else if (type === 'error') {
+        alertTitle.textContent = 'Please Check Your Input';
+        alertIcon.innerHTML = '<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>';
+        alertIcon.style.background = 'linear-gradient(135deg, #f44336, #d32f2f)';
+        alertBtn.style.background = 'linear-gradient(135deg, #f44336, #d32f2f)';
+        alert.querySelector('.alert-content').style.borderTop = '4px solid #f44336';
+    }
+    
+    // Show alert
+    console.log('Showing custom alert');
+    alert.classList.add('show');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeCustomAlert() {
+    const alert = document.getElementById('customAlert');
+    alert.classList.remove('show');
+    document.body.style.overflow = 'auto';
 }
 
 // Login Form Handling
