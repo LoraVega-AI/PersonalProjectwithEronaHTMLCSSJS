@@ -1432,6 +1432,7 @@ body {
     margin-bottom: 80px;
     position: relative;
     z-index: 2;
+    align-items: start;
 }
 
 .gallery-item {
@@ -1444,6 +1445,9 @@ body {
     box-shadow: 0 15px 35px rgba(68, 64, 84, 0.08);
     border: 1px solid rgba(77, 189, 233, 0.1);
     animation: galleryFadeIn 0.6s ease-out;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
 }
 
 .gallery-item::before {
@@ -1473,14 +1477,21 @@ body {
     height: 300px;
     overflow: hidden;
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .gallery-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center;
     transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     filter: brightness(0.95) saturate(0.9);
+    min-height: 300px;
+    min-width: 100%;
+    aspect-ratio: 4/3;
 }
 
 .gallery-item:hover .gallery-img {
@@ -1927,7 +1938,7 @@ body {
 }
 
 .lightbox.show {
-    display: flex;
+    display: flex !important;
     align-items: center;
     justify-content: center;
 }
@@ -2024,6 +2035,19 @@ body {
     border-radius: 15px;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease;
+    opacity: 0;
+    animation: lightboxImageFadeIn 0.4s ease-out forwards;
+}
+
+@keyframes lightboxImageFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 .lightbox-loader {
@@ -2324,6 +2348,7 @@ body {
     
     .gallery-item {
         border-radius: 20px;
+        height: 350px;
     }
     
     .gallery-image {
@@ -2419,6 +2444,7 @@ body {
     
     .gallery-item {
         border-radius: 15px;
+        height: 300px;
     }
     
     .gallery-image {
